@@ -451,11 +451,13 @@ export default class DayPickerRangeController extends React.Component {
         onClose({ startDate, endDate });
       }
     } else if (focusedInput === START_DATE) {
+      const lastAllowedStartDate = endDate && endDate.clone().subtract(minimumNights, 'days');
+
       onFocusChange(END_DATE);
 
       startDate = day;
 
-      if (isInclusivelyAfterDay(day, endDate)) {
+      if (isAfterDay(lastAllowedStartDate, endDate)) {
         endDate = null;
       }
     } else if (focusedInput === END_DATE) {
